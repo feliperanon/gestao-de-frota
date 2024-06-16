@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Veículo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+</head>
+<body>
+    <h1>Editar Veículo</h1>
+
+    <form action="{{ url_for('main.edit_vehicle', id=vehicle.id) }}" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.license_plate.label }} 
+            {{ form.license_plate(class_="form-control") }}
+            {% for error in form.license_plate.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.model.label }}
+            {{ form.model(class_="form-control") }}
+            {% for error in form.model.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+       <div class="form-group">
+            {{ form.availability.label }}
+            {{ form.availability(class_="form-control") }}
+            {% for error in form.availability.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        {{ form.submit(class_="btn btn-primary") }}
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div{% endif %}
+    {% endwith %}
+</body>
+</html>

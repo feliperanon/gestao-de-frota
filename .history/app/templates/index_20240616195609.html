@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestão de Frota</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gestão de Frota</h1>
+
+    <form action="{{ url_for('main.index') }}" method="post"> 
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.license_plate.label }}
+            {{ form.license_plate(class_="form-control") }}
+            {% for error in form.license_plate.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.model.label }}
+            {{ form.model(class_="form-control") }}
+            {% for error in form.model.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.availability.label }}
+            {{ form.availability(class_="form-control") }}
+            {% for error in form.availability.errors %}
+                <span class="error-message">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        {{ form.submit(class_="btn btn-primary") }}
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <divclass="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h2>Veículos</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Modelo</th>
+                <th>Disponibilidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ vehicle.license_plate }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>
+                        {% if vehicle.availability %}
+                            Disponível
+                        {% else %}
+                            Indisponível
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('main.edit_vehicle', id=vehicle.id) }}" class="btn btn-secondary btn-sm">Editar</a>
+                        <form action="{{ url_for('main.delete_vehicle', id=vehicle.id) }}" method="post" style="display: inline;">
+                            {{ form.hidden_tag() }}
+                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

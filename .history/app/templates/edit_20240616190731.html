@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Veículo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Editar Veículo</h1>
+    <form action="/edit/{{ vehicle.id }}" method="post">
+        {{ form.hidden_tag() }}
+        <label for="license_plate">Placa:</label>
+        {{ form.license_plate(size=10) }}
+        <label for="model">Modelo:</label>
+        {{ form.model(size=50) }}
+        {{ form.submit() }}
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </ul>
+</body>
+</html>
+

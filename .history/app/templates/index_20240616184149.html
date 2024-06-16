@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestão de Frota</title>
+</head>
+<body>
+    <h1>Gestão de Frota</h1>
+    <form action="/add" method="post">
+        <label for="license_plate">Placa:</label>
+        <input type="text" id="license_plate" name="license_plate" required>
+        <label for="model">Modelo:</label>
+        <input type="text" id="model" name="model" required>
+        <button type="submit">Adicionar Veículo</button>
+    </form>
+    <h2>Veículos</h2>
+    <ul>
+        {% for vehicle in vehicles %}
+            <li>{{ vehicle.license_plate }} - {{ vehicle.model }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

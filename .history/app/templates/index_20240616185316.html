@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gestão de Frota</title>
+</head>
+<body>
+    <h1>Gestão de Frota</h1>
+    <form action="/add" method="post">
+        {{ form.hidden_tag() }}
+        <label for="license_plate">Placa:</label>
+        {{ form.license_plate(size=10) }}
+        <label for="model">Modelo:</label>
+        {{ form.model(size=50) }}
+        {{ form.submit() }}
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h2>Veículos</h2>
+    <ul>
+        {% for vehicle in vehicles %}
+            <li>
+                {{ vehicle.license_plate }} - {{ vehicle.model }}
+                <a href="/edit/{{ vehicle.id }}">Editar</a>
+                <form action="/delete/{{ vehicle.id }}" method="post" style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
